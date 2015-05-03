@@ -25,6 +25,7 @@ import zipfile
 import pylzma
 import struct
 import zlib
+import base64
 
 from CTMagic import Whatype
 
@@ -533,6 +534,21 @@ def get_response_and_size(id, size, full_response=False):
             size = len(response)
 
     return response, size
+
+def get_request_uri(id):
+    if int(id) >= len(objects) or int(id) < 0:
+        raise Exception("   ID number " + str(id) + " isn't within range")
+
+    uri = conversations[int(id)].uri
+    pos = uri.find('?')
+    if pos != -1:
+        uri = uri[pos+1:]
+    return uri
+
+def urlb64d(id):
+    uri =  get_request_uri(id)
+    if not check_errors():
+        print base64.b64decode(uri)
 
 def ungzip_all():
     for conv in conversations:

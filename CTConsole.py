@@ -397,6 +397,22 @@ class console(cmd.Cmd, object):
         print newLine + "Decompress zlib compression"
         print newLine + "Usage: unzlib <conv_id>"
 
+    def do_urlb64d(self, line):
+        try:
+            l = line.split(" ")
+            if (l[0] == ""):
+                self.help_urlb64d()
+            else:
+                id = int(l[0])
+                if in_range(id):
+                    CTCore.urlb64d(id)
+        except Exception,e:
+            print str(e)
+
+    def help_urlb64d(self):
+        print newLine + "uri base64 decode"
+        print newLine + "Usage: urlb64d <conv_id>"
+
     def do_exit(self, line):
         if (CTCore.web_server_turned_on):
             CTCore.web_server.shutdown()
